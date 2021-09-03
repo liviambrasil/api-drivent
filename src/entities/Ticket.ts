@@ -1,7 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
 
-@Entity("sessions")
-export default class Ticket {
+@Entity("ticket")
+export default class Ticket extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -16,4 +16,9 @@ export default class Ticket {
 
     @Column()
     isPaid: boolean;
+
+    static async saveTicket(ticket: Ticket) {
+      const newTicket = this.create(ticket);
+      await this.save(newTicket);
+    }
 }

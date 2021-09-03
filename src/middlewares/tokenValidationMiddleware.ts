@@ -18,7 +18,7 @@ export default async function authenticationMiddleware(req: Request, res: Respon
       throw new UnauthorizedError();
     } 
   
-    const { userId } = jwt.verify(token, process.env.JWT_SECRET) as JwtPayload;
+    const { userId } = jwt.verify(token, process.env.JWT_SECRET) as JwtPayload; // USERID AQUI!!!
 
     const userSession = await sessionService.findSessionByToken(token);
 
