@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToOne, JoinColumn } from "typeorm";
+import User from "./User";
 
 @Entity("ticket")
 export default class Ticket extends BaseEntity {
@@ -16,6 +17,10 @@ export default class Ticket extends BaseEntity {
 
     @Column()
     isPaid: boolean;
+
+    @OneToOne(() => User, (user: User) => user.ticket)
+      @JoinColumn()
+      user: User;
 
     static async saveTicket(ticket: Ticket) {
       const newTicket = this.create(ticket);
