@@ -6,4 +6,6 @@ const router = Router();
 
 router.get("/", controller.get);
 
+router.get("/:hotelId", controller.getRooms);
+
 export default router;
