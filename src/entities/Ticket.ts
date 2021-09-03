@@ -1,3 +1,4 @@
+import TicketData from "@/interfaces/ticket";
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToOne, JoinColumn } from "typeorm";
 import User from "./User";
 
@@ -22,7 +23,7 @@ export default class Ticket extends BaseEntity {
       @JoinColumn()
       user: User;
 
-    static async saveTicket(ticket: Ticket) {
+    static async saveTicket(ticket: TicketData) {
       const newTicket = this.create(ticket);
       await this.save(newTicket);
     }
