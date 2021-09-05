@@ -11,18 +11,25 @@ export async function signIn(email: string, password: string) {
     throw new UnauthorizedError();
   }
 
-  const token = jwt.sign({
-    userId: user.id
-  }, process.env.JWT_SECRET);
+  const token = jwt.sign(
+    {
+      userId: user.id,
+    },
+    process.env.JWT_SECRET
+  );
 
   const session = await Session.createNew(user.id, token);
+
+  delete user.reservation.id;
+  delete user.reservation.userId;
 
   return {
     user: {
       id: user.id,
-      email: user.email
+      email: user.email,
+      reservation: user.reservation,
     },
 
-    token
+    token,
   };
 }

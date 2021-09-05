@@ -8,4 +8,6 @@ router.get("/", controller.get);
 
 router.get("/:hotelId", controller.getRooms);
 
+router.post("/reservation/:roomId", controller.saveReservation);
+
 export default router;

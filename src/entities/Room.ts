@@ -4,9 +4,11 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
+  ManyToMany,
 } from "typeorm";
 
 import Hotel from "./Hotel";
+import Reservation from "./Reservation";
 
 @Entity("rooms")
 export default class Room extends BaseEntity {
@@ -27,6 +29,9 @@ export default class Room extends BaseEntity {
 
   @ManyToOne(() => Hotel, (hotel: Hotel) => hotel.room)
   hotel: Hotel;
+
+  @ManyToMany(() => Reservation, (reservation) => reservation.room)
+  reservation: Reservation;
 
   static async list(hotelId: number) {
     const rooms = await this.find({ hotelId });

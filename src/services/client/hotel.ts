@@ -1,4 +1,5 @@
 import Hotel from "@/entities/Hotel";
+import Reservation from "@/entities/Reservation";
 import Room from "@/entities/Room";
 
 interface HotelInfo {
@@ -20,4 +21,16 @@ export async function getAll() {
   }
 
   return result;
+}
+
+export async function saveOrUpdateReservation(userId: number, roomId: number) {
+  const olderReservation = await Reservation.getByUserId(userId);
+
+  if (olderReservation) {
+    await Reservation.deleteByUserId(userId);
+    await Room.updateCurrentOccupation(olderReservation.roomId, -1);
+  }
+
+  await Reservation.saveNew(userId, roomId);
+  await Room.updateCurrentOccupation(roomId, 1);
 }
