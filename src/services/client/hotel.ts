@@ -34,3 +34,7 @@ export async function saveOrUpdateReservation(userId: number, roomId: number) {
   await Reservation.saveNew(userId, roomId);
   await Room.updateCurrentOccupation(roomId, 1);
 }
+
+export async function listRooms(hotelId: number) {
+  return await Room.list(hotelId);
+}

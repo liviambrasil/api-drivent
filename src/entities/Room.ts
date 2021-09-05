@@ -34,7 +34,11 @@ export default class Room extends BaseEntity {
   reservation: Reservation;
 
   static async list(hotelId: number) {
-    const rooms = await this.find({ hotelId });
+    const rooms = await this.find({
+      where: { hotelId },
+      order: { id: "ASC" },
+    });
+
     return rooms;
   }
 

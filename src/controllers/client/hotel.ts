@@ -2,24 +2,11 @@ import { Request, Response } from "express";
 import httpStatus from "http-status";
 
 import * as service from "@/services/client/hotel";
-import Room from "@/entities/Room";
 
 export async function get(_req: Request, res: Response) {
   const hotels = await service.getAll();
 
   res.status(httpStatus.OK).send(hotels);
-}
-
-export async function getRooms(req: Request, res: Response) {
-  const hotelId = parseInt(req.params.hotelId);
-
-  if (isNaN(hotelId)) {
-    return res.sendStatus(httpStatus.BAD_REQUEST);
-  }
-
-  const rooms = await Room.find({ hotelId });
-
-  res.send(rooms);
 }
 
 export async function saveReservation(req: Request, res: Response) {
@@ -32,4 +19,16 @@ export async function saveReservation(req: Request, res: Response) {
 
   await service.saveOrUpdateReservation(userId, roomId);
   res.sendStatus(httpStatus.CREATED);
+}
+
+export async function getRooms(req: Request, res: Response) {
+  const hotelId = parseInt(req.params.hotelId);
+
+  if (isNaN(hotelId)) {
+    return res.sendStatus(httpStatus.BAD_REQUEST);
+  }
+
+  const rooms = await service.listRooms(hotelId);
+
+  res.send(rooms);
 }
