@@ -58,4 +58,9 @@ export default class Room extends BaseEntity {
 
     room.save();
   }
+
+  static async getByRoomId(id: number) {
+    const room = await this.findOne({ where: { id }, relations: ["hotel"] });
+    return room;
+  }
 }

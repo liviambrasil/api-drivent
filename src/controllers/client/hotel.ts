@@ -32,3 +32,9 @@ export async function getRooms(req: Request, res: Response) {
 
   res.send(rooms);
 }
+
+export async function getReservation(req: Request, res: Response) {
+  const reservation = await service.getReservationByUserId(req.user.id);
+
+  res.send(reservation);
+}

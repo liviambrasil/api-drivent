@@ -38,3 +38,15 @@ export async function saveOrUpdateReservation(userId: number, roomId: number) {
 export async function listRooms(hotelId: number) {
   return await Room.list(hotelId);
 }
+
+export async function getReservationByUserId(id: number) {
+  const reservation = await Reservation.getByUserId(id);
+
+  if (!reservation) {
+    return null;
+  }
+
+  const room = await Room.getByRoomId(reservation.roomId);
+
+  return room;
+}
