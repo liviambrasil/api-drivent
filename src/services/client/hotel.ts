@@ -46,7 +46,18 @@ export async function getReservationByUserId(id: number) {
     return null;
   }
 
-  const room = await Room.getByRoomId(reservation.roomId);
+  const {
+    hotel,
+    currentOccupation,
+    maxOccupation,
+    number: roomNumber,
+  } = await Room.getByRoomId(reservation.roomId);
 
-  return room;
+  return {
+    roomNumber,
+    maxOccupation,
+    currentOccupation,
+    hotelName: hotel.name,
+    hotelImage: hotel.image,
+  };
 }

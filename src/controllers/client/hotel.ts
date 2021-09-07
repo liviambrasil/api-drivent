@@ -9,18 +9,6 @@ export async function get(_req: Request, res: Response) {
   res.status(httpStatus.OK).send(hotels);
 }
 
-export async function saveReservation(req: Request, res: Response) {
-  const roomId = parseInt(req.params.roomId);
-  const userId = req.user.id;
-
-  if (isNaN(roomId)) {
-    return res.sendStatus(httpStatus.BAD_REQUEST);
-  }
-
-  await service.saveOrUpdateReservation(userId, roomId);
-  res.sendStatus(httpStatus.CREATED);
-}
-
 export async function getRooms(req: Request, res: Response) {
   const hotelId = parseInt(req.params.hotelId);
 
@@ -31,6 +19,18 @@ export async function getRooms(req: Request, res: Response) {
   const rooms = await service.listRooms(hotelId);
 
   res.send(rooms);
+}
+
+export async function saveReservation(req: Request, res: Response) {
+  const roomId = parseInt(req.params.roomId);
+  const userId = req.user.id;
+
+  if (isNaN(roomId)) {
+    return res.sendStatus(httpStatus.BAD_REQUEST);
+  }
+
+  await service.saveOrUpdateReservation(userId, roomId);
+  res.sendStatus(httpStatus.CREATED);
 }
 
 export async function getReservation(req: Request, res: Response) {
