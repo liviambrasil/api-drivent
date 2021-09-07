@@ -11,6 +11,7 @@ interface JwtPayload {
 
 export default async function authenticationMiddleware(req: Request, res: Response, next: NextFunction) {
   try {
+    console.log("validando");
     const authHeader = req.header("Authorization");
 
     const token = authHeader?.replace("Bearer ", "");
@@ -27,6 +28,7 @@ export default async function authenticationMiddleware(req: Request, res: Respon
     }
 
     req.user = { id: userId };
+    console.log("passou da validação");
     next();
   } catch (e) {
     throw new UnauthorizedError();

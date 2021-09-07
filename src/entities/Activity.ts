@@ -25,7 +25,10 @@ export default class Activity extends BaseEntity {
   @JoinColumn()
   location: Location;
 
-//   @OneToOne(() => Enrollment, (enrollment: Enrollment) => enrollment.address)
-//   @JoinColumn()
-//   enrollment: Enrollment;
+  static async getActivities() {
+    console.log("chegou na database");
+    const activities = await this.find();
+    console.log("retornou a info");
+    return activities;
+  }
 }
