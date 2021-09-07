@@ -20,14 +20,10 @@ export async function signIn(email: string, password: string) {
 
   const session = await Session.createNew(user.id, token);
 
-  delete user.reservation.id;
-  delete user.reservation.userId;
-
   return {
     user: {
       id: user.id,
       email: user.email,
-      reservation: user.reservation,
     },
 
     token,

@@ -57,7 +57,6 @@ export default class User extends BaseEntity {
   static async findByEmailAndPassword(email: string, password: string) {
     const user = await this.findOne({
       where: { email },
-      relations: ["reservation"],
     });
 
     if (user && bcrypt.compareSync(password, user.password)) {
