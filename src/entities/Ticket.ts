@@ -27,4 +27,9 @@ export default class Ticket extends BaseEntity {
       const newTicket = this.create(ticket);
       await this.save(newTicket);
     }
+
+    static async findById(id: number) {
+      const ticket = await this.findOne({ userId: id });
+      return ticket;
+    }
 }

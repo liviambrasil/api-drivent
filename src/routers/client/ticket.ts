@@ -8,5 +8,6 @@ import ticketSchema from "@/schemas/ticketSchema";
 const router = Router();
 
 router.post("/", schemaValidatingMiddleware(ticketSchema), controller.saveTicket);
+router.get("/", controller.getTicket);
 
 export default router;
