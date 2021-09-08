@@ -8,3 +8,4 @@ export async function getActivities(req: Request, res: Response) {
   const activities = await service.getActivities();
   res.send(activities).status(200);
 }
+

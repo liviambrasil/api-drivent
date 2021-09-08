@@ -6,6 +6,8 @@ import authRouter from "@/routers/client/auth";
 import enrollmentRouter from "@/routers/client/enrollment";
 import ticketRouter from "@/routers/client/ticket";
 import activityRouter from "@/routers/client/activity";
+import eventDaysRouter from "@/routers/client/eventDay";
+import locationsRouter from "@/routers/client/locations";
 
 import tokenValidationMiddleware from "@/middlewares/tokenValidationMiddleware";
 
@@ -17,5 +19,7 @@ router.use("/auth", authRouter);
 router.use("/enrollments", tokenValidationMiddleware, enrollmentRouter);
 router.use("/ticket", tokenValidationMiddleware, ticketRouter);
 router.use("/activity", tokenValidationMiddleware, activityRouter);
+router.use("/eventDays", tokenValidationMiddleware, eventDaysRouter);
+router.use("/locations", tokenValidationMiddleware, locationsRouter);
 
 export default router;

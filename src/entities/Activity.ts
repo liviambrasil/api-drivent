@@ -1,6 +1,7 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 import Location from "./Location";
 import ActivityUser from "./activitiesUsers";
+import EventDay from "./EventDay";
 
 @Entity("activities")
 export default class Activity extends BaseEntity {
@@ -10,8 +11,8 @@ export default class Activity extends BaseEntity {
   @Column()
   name: string;
 
-  @Column()
-  date: Date;
+  @ManyToOne(() => EventDay, (eventDay: EventDay) => eventDay.activities)
+  eventDay: EventDay;
 
   @Column()
   startTime: Date;
