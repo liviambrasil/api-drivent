@@ -1,7 +1,8 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToOne } from "typeorm";
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToOne, OneToMany } from "typeorm";
 import bcrypt from "bcrypt";
 import EmailNotAvailableError from "@/errors/EmailNotAvailable";
 import Ticket from "./Ticket";
+import ActivityUser from "./activitiesUsers";
 
 @Entity("users")
 export default class User extends BaseEntity {
@@ -18,7 +19,10 @@ export default class User extends BaseEntity {
   createdAt: Date;
 
   @OneToOne(() => Ticket, (ticket) => ticket.user, { eager: true })
-      ticket: Ticket;
+  ticket: Ticket;
+
+  @OneToMany(() => ActivityUser, (activityUser) => activityUser.user, { onDelete: "CASCADE" })
+  activitiesUsers: ActivityUser[]
 
   static async createNew(email: string, password: string) {
     await this.validateDuplicateEmail(email);
