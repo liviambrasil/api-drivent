@@ -1,13 +1,9 @@
-import {
-  BaseEntity,
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  OneToOne,
-} from "typeorm";
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToOne, OneToMany } from "typeorm";
 import bcrypt from "bcrypt";
 import EmailNotAvailableError from "@/errors/EmailNotAvailable";
 import Ticket from "./Ticket";
+import ActivityUser from "./activitiesUsers";
+
 import Reservation from "./Reservation";
 
 @Entity("users")
@@ -26,6 +22,9 @@ export default class User extends BaseEntity {
 
   @OneToOne(() => Ticket, (ticket) => ticket.user, { eager: true })
   ticket: Ticket;
+
+  @OneToMany(() => ActivityUser, (activityUser) => activityUser.user, { onDelete: "CASCADE" })
+  activitiesUsers: ActivityUser[]
 
   @OneToOne(() => Reservation, (reservation) => reservation.user, {
     eager: true,
