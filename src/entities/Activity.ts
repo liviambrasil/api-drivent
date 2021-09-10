@@ -30,7 +30,6 @@ export default class Activity extends BaseEntity {
   activitiesUsers: ActivityUser[]
 
   static async getActivities() {
-    
     const activities = await this.find({ relations: ["location"] });
   
     return activities;

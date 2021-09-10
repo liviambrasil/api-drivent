@@ -15,11 +15,9 @@ export async function getDays() {
 }
 
 export async function addNewDay(day: string) {
-  
   const newDay = dayjs(day).toISOString();
   
   return await EventDay.addNewDay(newDay);
-
 }
 
 interface Days{

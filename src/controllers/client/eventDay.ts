@@ -4,7 +4,6 @@ import httpStatus from "http-status";
 import * as service from "@/services/client/eventDay";
 
 export async function getDays(req: Request, res: Response) {
-  
   const Days = await service.getDays();
   res.send(Days).status(200);
 }
