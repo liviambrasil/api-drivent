@@ -1,4 +1,4 @@
 
 export async function getActivities() {
-  return;
+  return "not Available yet";
 }

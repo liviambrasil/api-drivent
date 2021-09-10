@@ -13,6 +13,9 @@ import EventDay from "@/entities/EventDay";
 import faker from "faker";
 import { boolean, number, string } from "joi";
 import dayjs from "dayjs";
+import {generateToken} from "../factories/token"
+import {createUser} from "../factories/userFactory"
+import {createSession} from "../factories/sessionFactory"
 
 const agent =  supertest(app);
 let settings = null;
@@ -35,11 +38,9 @@ afterAll(async () => {
 describe("GET /EventDays", () => {
     it("returns 200 for valid params", async () => {
       const userData = await User.createNew(faker.internet.email(), "1234567");
-  
-      const token = jwt.sign({
-        userId: userData.id
-      }, process.env.JWT_SECRET);
-  
+      
+      const token = await generateToken(userData.id)
+      
       const sessionData = await Session.createNew(userData.id, token);
     
       const response = await agent.get("/eventDays").set("Authorization", `Bearer ${sessionData.token}`);
@@ -48,16 +49,17 @@ describe("GET /EventDays", () => {
     });
 
     it("returns correct object format", async () => {
-        const userData = await User.createNew(faker.internet.email(), "1234567");
+        const userData = await createUser();
     
-        const token = jwt.sign({
-          userId: userData.id
-        }, process.env.JWT_SECRET);
+        const token = await generateToken(userData.id)
     
-        const sessionData = await Session.createNew(userData.id, token);
+        const sessionData = await createSession(userData.id, token);
+
         let date = faker.date.between("2010-12-10", "2016-12-25")
         const stringDate = dayjs(date).toISOString()
+        
         await EventDay.addNewDay(stringDate)
+        
         const response = await agent.get("/eventDays").set("Authorization", `Bearer ${sessionData.token}`);
        
         expect(response.body).toEqual(
