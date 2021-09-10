@@ -43,7 +43,7 @@ describe("GET /EventDays", () => {
       const sessionData = await Session.createNew(userData.id, token);
     
       const response = await agent.get("/eventDays").set("Authorization", `Bearer ${sessionData.token}`);
-      console.log(response.body)
+      
       expect(response.statusCode).toEqual(200);
     });
 
@@ -59,7 +59,7 @@ describe("GET /EventDays", () => {
         const stringDate = dayjs(date).toISOString()
         await EventDay.addNewDay(stringDate)
         const response = await agent.get("/eventDays").set("Authorization", `Bearer ${sessionData.token}`);
-        console.log(response.body)
+       
         expect(response.body).toEqual(
             expect.arrayContaining([
                 expect.objectContaining({
