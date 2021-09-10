@@ -1,7 +1,14 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, OneToOne } from "typeorm";
+import {
+  BaseEntity,
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+} from "typeorm";
 import bcrypt from "bcrypt";
 import EmailNotAvailableError from "@/errors/EmailNotAvailable";
 import Ticket from "./Ticket";
+import Reservation from "./Reservation";
 
 @Entity("users")
 export default class User extends BaseEntity {
@@ -18,7 +25,12 @@ export default class User extends BaseEntity {
   createdAt: Date;
 
   @OneToOne(() => Ticket, (ticket) => ticket.user, { eager: true })
-      ticket: Ticket;
+  ticket: Ticket;
+
+  @OneToOne(() => Reservation, (reservation) => reservation.user, {
+    eager: true,
+  })
+  reservation: Reservation;
 
   static async createNew(email: string, password: string) {
     await this.validateDuplicateEmail(email);
@@ -37,13 +49,15 @@ export default class User extends BaseEntity {
   static async validateDuplicateEmail(email: string) {
     const user = await this.findOne({ email });
 
-    if(user) {
+    if (user) {
       throw new EmailNotAvailableError(email);
     }
   }
 
   static async findByEmailAndPassword(email: string, password: string) {
-    const user = await this.findOne({ email });
+    const user = await this.findOne({
+      where: { email },
+    });
 
     if (user && bcrypt.compareSync(password, user.password)) {
       return user;
@@ -52,4 +66,3 @@ export default class User extends BaseEntity {
     return null;
   }
 }
-
