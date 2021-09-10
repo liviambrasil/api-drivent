@@ -37,11 +37,11 @@ afterAll(async () => {
 
 describe("GET /EventDays", () => {
     it("returns 200 for valid params", async () => {
-      const userData = await User.createNew(faker.internet.email(), "1234567");
+      const userData = await createUser();
       
       const token = await generateToken(userData.id)
       
-      const sessionData = await Session.createNew(userData.id, token);
+      const sessionData = await createSession(userData.id, token);
     
       const response = await agent.get("/eventDays").set("Authorization", `Bearer ${sessionData.token}`);
       
