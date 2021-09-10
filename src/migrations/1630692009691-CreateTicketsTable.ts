@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class FixUserRelations1630696706673 implements MigrationInterface {
-    name = "FixUserRelations1630696706673"
+export class CreateTicketsTable1630692009691 implements MigrationInterface {
+    name = "CreateTicketsTable1630692009691"
 
     public async up(queryRunner: QueryRunner): Promise<void> {
       await queryRunner.query("CREATE TABLE \"ticket\" (\"id\" SERIAL NOT NULL, \"userId\" integer NOT NULL, \"isPresential\" boolean NOT NULL, \"isHotel\" boolean NOT NULL, \"isPaid\" boolean NOT NULL, CONSTRAINT \"REL_0e01a7c92f008418bad6bad591\" UNIQUE (\"userId\"), CONSTRAINT \"PK_d9a0835407701eb86f874474b7c\" PRIMARY KEY (\"id\"))");
