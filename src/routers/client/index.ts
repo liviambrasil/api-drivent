@@ -20,6 +20,7 @@ router.use("/enrollments", tokenValidationMiddleware, enrollmentRouter);
 router.use("/ticket", tokenValidationMiddleware, ticketRouter);
 router.use("/activity", tokenValidationMiddleware, activityRouter);
 router.use("/eventDays", tokenValidationMiddleware, eventDaysRouter);
+router.use("/addEventDays", eventDaysRouter);
 router.use("/locations", tokenValidationMiddleware, locationsRouter);
 
 export default router;
