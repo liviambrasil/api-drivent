@@ -7,6 +7,6 @@ import ticketSchema from "@/schemas/ticketSchema";
 
 const router = Router();
 
-router.get("/", schemaValidatingMiddleware(ticketSchema), controller.getActivities);
+router.get("/", controller.getActivities);
 
 export default router;
