@@ -4,7 +4,6 @@ import httpStatus from "http-status";
 import * as service from "@/services/client/location";
 
 export async function getLocations(req: Request, res: Response) {
-  console.log("chegou no controller");
   const locations = await service.getLocations();
   res.send(locations).status(200);
 }
