@@ -10,25 +10,14 @@ export async function getDays() {
     delete day.date;
     requestedDays.push({ ...day, dayInfo });
   });
-  console.log(days);
-
-  //days={...days,newDate:dayjs(days)}
-
+  
   return requestedDays;
 }
 
 export async function addNewDay(day: string) {
-  console.log(day);
-  //const newDay = 
   const newDay = dayjs(day).toISOString();
   
-  console.log(newDay);
-  
   return await EventDay.addNewDay(newDay);
-  
-  //const days = await EventDay.getDays();
-  
-  // return days;
 }
 
 interface Days{

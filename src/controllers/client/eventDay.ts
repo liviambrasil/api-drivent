@@ -9,8 +9,10 @@ export async function getDays(req: Request, res: Response) {
 }
 
 export async function addNewDay(req: Request, res: Response) {
-  if(await service.addNewDay(req.body.date)) {
-    res.status(200);
+  const insertDay = await service.addNewDay(req.body.date);
+ 
+  if(insertDay) {
+    res.sendStatus(200);
   }else{
     res.status(400);
   }

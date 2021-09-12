@@ -1,5 +1,3 @@
-import Activity from "@/entities/Activity";
-import dayjs from "dayjs";
 
 export async function getActivities() {
   console.log("chegou no service activity");

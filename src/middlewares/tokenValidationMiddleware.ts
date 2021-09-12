@@ -15,7 +15,7 @@ export default async function authenticationMiddleware(req: Request, res: Respon
     const authHeader = req.header("Authorization");
     
     const token = authHeader?.replace("Bearer ", "");
-    console.log(token);
+    
     if (!token) {
       throw new UnauthorizedError();
     } 
@@ -29,7 +29,7 @@ export default async function authenticationMiddleware(req: Request, res: Respon
     }
 
     req.user = { id: userId };
-    console.log("passou da validação");
+   
     next();
   } catch (e) {
     throw new UnauthorizedError();

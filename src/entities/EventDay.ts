@@ -24,11 +24,8 @@ export default class EventDay extends BaseEntity {
     const newDay = {
       date: day
     };
-    if(await this.insert(newDay)) {
-      return true;
-    }else{
-      return false;
-    }
+    await this.insert(newDay);
+    return true;
   }
 }
 
