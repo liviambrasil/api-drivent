@@ -3,7 +3,6 @@ import dayjs, { Dayjs } from "dayjs";
 
 export async function getDays() {
   const days = await EventDay.getDays();
-  console.log(days, "days");
   const requestedDays: Days[] = [];
 
   days.forEach((day) => {
@@ -16,11 +15,10 @@ export async function getDays() {
 
 export async function addNewDay(day: string) {
   const newDay = dayjs(day).toISOString();
-  
+
   return await EventDay.addNewDay(newDay);
 }
 
-interface Days{
-    dayInfo: string
+interface Days {
+  dayInfo: string;
 }
-  
