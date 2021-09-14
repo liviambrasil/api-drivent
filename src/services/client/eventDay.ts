@@ -3,14 +3,14 @@ import dayjs, { Dayjs } from "dayjs";
 
 export async function getDays() {
   const days = await EventDay.getDays();
-  
+  console.log(days, "days");
   const requestedDays: Days[] = [];
+
   days.forEach((day) => {
-    const dayInfo = dayjs(day.date).format("dddd, DD/MM");
-    delete day.date;
+    const dayInfo = dayjs(day.date).format("dddd DD/MM, YYYY h:mm");
+    //delete day.date;
     requestedDays.push({ ...day, dayInfo });
   });
-  
   return requestedDays;
 }
 
