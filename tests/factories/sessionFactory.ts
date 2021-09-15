@@ -1,8 +1,8 @@
-import Session from "@/entities/Session";
-import { emitWarning } from "process";
-
+import createRedisClient from "../../src/redis";
 export async function createSession(userId: number, token: string) {
-  const session = await Session.createNew(userId, token);
-  await session.save();
-  return session
+  const redisClient = createRedisClient();
+  await redisClient.set(token, userId, "EX", 3600);
+  redisClient.endConnection();
+
+  return { userId, token };
 }
