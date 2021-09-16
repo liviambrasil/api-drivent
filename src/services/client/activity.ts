@@ -1,12 +1,11 @@
-
+import ActivityUser from "@/entities/activitiesUsers";
 import Activity from "@/entities/Activity";
 import EventDay from "@/entities/EventDay";
 import dayjs from "dayjs";
+import { idText, isIfStatement } from "typescript";
 export async function getActivities() {
-  console.log("chegou no service activity");
   const activities = await Activity.getActivities();
 
-  console.log(activities, "antiga");
   const ActivitiesRightTime: Times[] = [];
 
   activities.forEach((e) => {
@@ -17,7 +16,6 @@ export async function getActivities() {
     ActivitiesRightTime.push({ ...e, start, end });
   });
 
-  console.log(activities, "activities", ActivitiesRightTime, "requestedDays");
   return ActivitiesRightTime;
 }
 
@@ -25,7 +23,60 @@ export async function getDayActivities() {
   //return await Activity.getActivities();
 }
 
-interface Times{
-    start: string
-    end: string
+interface Times {
+  start: string;
+  end: string;
+}
+
+export async function getActivitiesByUserId(userId: number) {
+  const userActivities = await ActivityUser.find({ userId });
+
+  userActivities.forEach((ua) => {
+    delete ua.id;
+    delete ua.userId;
+  });
+
+  return userActivities;
+}
+
+export async function saveUserActivity(userId: number, activityId: number) {
+  const newActivity = await Activity.findOne({ id: activityId });
+
+  const activityDuration = dayjs(newActivity.endTime).diff(
+    newActivity.startTime,
+    "s"
+  );
+
+  const userActivities = await ActivityUser.find({
+    where: { userId },
+    relations: ["activity"],
+  });
+
+  const result = {} as { error: string };
+
+  if (!newActivity) result.error = "invalidId";
+
+  userActivities.forEach(({ activity }) => {
+    if (activity.id === newActivity.id) {
+      result.error = "conflict";
+    }
+
+    if (dayjs(newActivity.endTime).diff(activity.startTime) < 0) {
+      result.error = "conflict";
+    }
+
+    if (dayjs(activity.endTime).diff(newActivity.startTime) < 0) {
+      result.error = "conflict";
+    }
+  });
+
+  if (!result.error) {
+    const activityUser = ActivityUser.create({ userId, activityId });
+    await activityUser.save();
+
+    newActivity.vacancies--;
+    await newActivity.save();
+  }
+
+  return result;
 }

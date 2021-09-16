@@ -9,4 +9,8 @@ const router = Router();
 
 router.get("/", controller.getActivities);
 
+router.get("/acquired", controller.getUserActivities);
+
+router.post("/acquired/:activityId", controller.saveUserActivities);
+
 export default router;

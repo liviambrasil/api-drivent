@@ -15,7 +15,6 @@ export default async function authenticationMiddleware(
   next: NextFunction
 ) {
   try {
-    console.log(req.body);
     const authHeader = req.header("Authorization");
 
     const token = authHeader?.replace("Bearer ", "");
