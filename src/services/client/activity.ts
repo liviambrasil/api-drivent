@@ -15,7 +15,6 @@ export async function getActivities() {
     delete e.endTime;
     ActivitiesRightTime.push({ ...e, start, end });
   });
-
   return ActivitiesRightTime;
 }
 

@@ -1,10 +1,14 @@
-// import supertest from "supertest";
+import supertest from "supertest";
 // import app, { init } from "@/app";
-// import Setting from "@/entities/Setting";
 // import { clearDatabase, endConnection } from "../utils/database";
-// import { createBasicSettings } from "../utils/app";
-// const agent =  supertest(app);
-// let settings = null;
+// import { createActivity } from "../factories/activityFactory";
+// import httpStatus from "http-status";
+// import Activity from "@/entities/Activity";
+// import { createAuthenticatedUser } from "./utils/createAuthenticatedUser";
+
+// const agent = supertest(app);
+// let token: string;
+// let userId: number;
 
 // beforeAll(async () => {
 //   await init();
@@ -12,7 +16,9 @@
 
 // beforeEach(async () => {
 //   await clearDatabase();
-//   settings = await createBasicSettings();
+//   const authenticatedUserData = await createAuthenticatedUser();
+//   token = authenticatedUserData.token;
+//   userId = authenticatedUserData.userId;
 // });
 
 // afterAll(async () => {
@@ -21,19 +27,18 @@
 // });
 
 // describe("GET /activity", () => {
-//   it("should return event settings", async () => {
-//     const response = await agent.get("/event");
-//     expect(response.body).toEqual({
-//       startDate: await getSettingValue("start_date"),
-//       endDate: await getSettingValue("end_date"),
-//       eventTitle: await getSettingValue("event_title"),
-//       backgroundImage: await getSettingValue("background_image"),
-//       logoImage: await getSettingValue("logo_image")
-//     });
-//   });
-// });
+//   it("Returns an array of hotels if there is hotel", async () => {
+//     const hotelInfo = await createHotel();
 
-// async function getSettingValue(name: string) {
-//   const setting = await Setting.findOne({ name });
-//   return setting?.value;
-// }
+//     const response = await agent
+//       .get("/hotels")
+//       .set("Authorization", `Bearer ${token}`);
+
+//     expect(response.body).toEqual([
+//       {
+//         id: expect.any(Number),
+//         ...hotelInfo,
+//         availableRooms: 0,
+//       },
+//     ]);
+//   });
