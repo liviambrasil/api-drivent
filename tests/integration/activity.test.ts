@@ -28,7 +28,7 @@ afterAll(async () => {
 
 describe("GET /activity", () => {
   it("Returns an array of activities if there is in database", async () => {
-    const activityInfo = await createActivity();
+    await createActivity();
 
     const response = await agent
       .get("/activity")
@@ -37,10 +37,12 @@ describe("GET /activity", () => {
     expect(response.body).toEqual([
       {
         id: expect.any(Number),
-        end: expect.any(Date),
-        start: expect.any(Date),
         name: expect.any(String),
-        vacancies: expect.any(Number),
+        end:  expect.any(String),
+        start:  expect.any(String),
+        location: expect.any(Object),
+        eventDay: expect.any(Object), 
+        vacancies: expect.any(Number)
       },
     ]);
   });
