@@ -7,7 +7,7 @@ export async function getDays() {
 
   days.forEach((day) => {
     const dayInfo = dayjs(day.date).format("dddd DD/MM, YYYY h:mm");
-    //delete day.date;
+    delete day.date;
     requestedDays.push({ ...day, dayInfo });
   });
   return requestedDays;
