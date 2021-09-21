@@ -1,6 +1,6 @@
 import supertest from "supertest";
 import jwt from "jsonwebtoken";
-
+import "@/setup";
 import app, { init } from "@/app";
 import Setting from "@/entities/Setting";
 import { clearDatabase, endConnection } from "../utils/database";

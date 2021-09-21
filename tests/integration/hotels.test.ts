@@ -1,4 +1,5 @@
 import supertest from "supertest";
+import "@/setup";
 import app, { init } from "@/app";
 import { clearDatabase, endConnection } from "../utils/database";
 import { createHotel } from "../factories/hotelFactory";
