@@ -1,5 +1,4 @@
-import "@/setup";
-
+import "../src/setup";
 import express from "express";
 import "express-async-errors";
 import cors from "cors";

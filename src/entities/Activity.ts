@@ -28,10 +28,8 @@ export default class Activity extends BaseEntity {
 
   @OneToMany(() => ActivityUser, (activityUser) => activityUser.activity, { onDelete: "CASCADE" })
   activitiesUsers: ActivityUser[]
-
+ 
   static async getActivities() {
-    const activities = await this.find({ relations: ["location"] });
-  
-    return activities;
+    return await this.find({ relations: ["location", "eventDay"] });
   }
 }

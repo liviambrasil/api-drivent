@@ -2,7 +2,7 @@ import supertest from "supertest";
 import faker from "faker";
 import httpStatus from "http-status";
 import dayjs from "dayjs";
-
+import "@/setup";
 import app, { init } from "@/app";
 import Setting from "@/entities/Setting";
 import User from "@/entities/User";
